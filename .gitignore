@@ -1,0 +1,9 @@
+/build/
+/DCbank-war/dist/
+/DCbank/nbproject
+/nbproject/private/
+/DCbank-war/nbproject/private/
+/DCbank-ejb/nbproject/private/
+/DCbank-ejb/build/
+/DCbank-war/build/
+/DCbank-ejb/dist/
