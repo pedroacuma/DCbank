@@ -87,7 +87,7 @@
                         for (Cuenta c : listaCuentas){
                     %>
                         <tr>
-                            <td><a href="EmpleadoServlet?cuentaUsuario=<%= c.getIdCuenta()%>&buscadorUsuario=<%=usuario.getDni()%>"><%=c.getIban()%></a></td>
+                            <td><a href="ListaMovsCuenta?cuentaUsuario=<%= c.getIdCuenta()%>"> <%=c.getIban()%></a></td>
                         </tr>
                     <%
                         }
@@ -99,10 +99,10 @@
                 <table border = "3" class = "tablaMovimientos">
                     <tr>
                         <th align = "center"><b>Movimientos</b></th>
-                        <th align = "center"><b><form  name="buscadorMovimiento" action="EmpleadoServlet" method="post">
+                        <th align = "center"><b><form  name="buscadorMovimiento" action="ListaMovsCuentaYConcepto" method="post">
                             <label for="buscadorMovimiento"> Buscar Movimiento </label>
-                            <input type="text" name="buscadorMovimiento" placeholder="Introduzca Concepto">
-                            <input type="hidden" name="buscadorUsuario" value=<%=usuario.getDni()%>>
+                            <input type="text" name="concepto" placeholder="Introduzca Concepto">
+                           
                         </form> </b></th>
                         <th></th>
                         <th></th>
@@ -119,7 +119,7 @@
                     </tr>
                     
                     <%  
-                        if (session.getAttribute("movimientos") == null){
+                        if (request.getAttribute("movimientosFiltrados") == null){
                         
                     %>
 
@@ -149,7 +149,7 @@
                                 
                         <%  
                             }else{
-                                List<Transferencia> listaBuscados = (List<Transferencia>) session.getAttribute("movimientos");
+                                List<Transferencia> listaBuscados = (List<Transferencia>) request.getAttribute("movimientosFiltrados");
                         %>    
                                     <%
                                         for (Transferencia t : listaBuscados){

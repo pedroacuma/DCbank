@@ -57,30 +57,16 @@ public class EmpleadoServlet extends HttpServlet {
         String dni = request.getParameter("buscadorUsuario");
         if (dni != null){
             Usuario user = uf.buscarPorDni(dni);
-            if (user == null){
-                rd = this.getServletContext().getRequestDispatcher("/empleadoPrincipal.jsp");
-                rd.forward(request, response);
-            }else{
+            
+            if (user != null){
                 session.setAttribute("user", user);
                 List<Cuenta> listaCuentas =  cf.buscarPorPropietario(user);
                 session.setAttribute("listaCuentas", listaCuentas);
-                
-                String idCuenta = request.getParameter("cuentaUsuario");
-                if (idCuenta != null){
-                    Cuenta cuenta = cf.buscarPorID(Integer.parseInt(idCuenta));
-                    List<Transferencia> listaMovimientos = tf.buscarPorCuenta(cuenta);
-                    session.setAttribute("listaMovimientos", listaMovimientos);
-                }
-                
-                String conceptoMov = request.getParameter("buscadorMovimiento");
-                if (conceptoMov != null){
-                    List<Transferencia> mov = tf.buscarConcepto(conceptoMov);
-                    session.setAttribute("movimientos", mov);
-                }else{
-                    session.setAttribute("movimientos", null);
-                }
             }
+  
         }
+        
+        
         rd = this.getServletContext().getRequestDispatcher("/empleadoPrincipal.jsp");
         rd.forward(request, response);
         

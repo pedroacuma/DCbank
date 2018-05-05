@@ -79,7 +79,8 @@
                 for (Cuenta c : listaCuentas){
             %>
                 <tr>
-                    <td><a href="DatosUsuarioServlet?cuentaUsuario=<%= c.getIdCuenta()%>" ><%=c.getIban()%></a></td>
+                    <td><a href="ListaMovsCuenta?cuentaUsuario=<%= c.getIdCuenta()%>" ><%=c.getIban()%></a></td>
+                   
                 </tr>
             <%
                 }
@@ -91,9 +92,9 @@
             <table border = "3" class = "tablaMovimientos">
                 <tr>
                     <th align = "center"><b>Movimientos</b></th>
-                        <th align = "center"><b><form  name="buscadorMovimiento" action="DatosUsuarioServlet" method="post">
+                        <th align = "center"><b><form  name="buscadorMovimiento" action="ListaMovsCuentaYConcepto" method="post">
                             <label for="buscadorMovimiento"> Buscar Movimiento </label>
-                            <input type="text" name="buscadorMovimiento" placeholder="Introduzca Concepto">
+                            <input type="text" name="concepto" placeholder="Introduzca Concepto">
                         </form> </b></th>
                         <th></th>
                         <th></th>
@@ -109,7 +110,7 @@
                     <td align = "center">Concepto</td>
                 </tr>
                         <%  
-                            if (session.getAttribute("movimientos") == null){
+                            if (request.getAttribute("movimientosFiltrados") == null){
                         %>
                             <%  
                                 if (request.getParameter("cuentaUsuario") != null){
@@ -135,7 +136,7 @@
                             %>   
                         <%  
                             }else{
-                                List<Transferencia> listT = (List<Transferencia>)session.getAttribute("movimientos");
+                                List<Transferencia> listT = (List<Transferencia>)request.getAttribute("movimientosFiltrados");
                         %> 
                                 <%
                                     for (Transferencia t : listT){

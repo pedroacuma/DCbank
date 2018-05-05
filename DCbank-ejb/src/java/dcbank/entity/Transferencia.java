@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Transferencia.findByFecha", query = "SELECT t FROM Transferencia t WHERE t.fecha = :fecha")
     , @NamedQuery(name = "Transferencia.findByCantidad", query = "SELECT t FROM Transferencia t WHERE t.cantidad = :cantidad")
     , @NamedQuery(name = "Transferencia.findByBeneficiario", query = "SELECT t FROM Transferencia t WHERE t.beneficiario = :beneficiario")
-    , @NamedQuery(name = "Transferencia.findByConcepto", query = "SELECT t FROM Transferencia t WHERE t.concepto LIKE :concepto")})
+    , @NamedQuery(name = "Transferencia.findByConcepto", query = "SELECT t FROM Transferencia t WHERE t.concepto LIKE :concepto")
+    , @NamedQuery(name = "Transferencia.findByConceptoCuenta", query = "SELECT t FROM Transferencia t WHERE t.concepto LIKE :concepto AND t.cuenta = :cuenta")})
 public class Transferencia implements Serializable {
 
     private static final long serialVersionUID = 1L;

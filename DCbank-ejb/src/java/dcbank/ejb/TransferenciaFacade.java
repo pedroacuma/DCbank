@@ -46,9 +46,12 @@ public class TransferenciaFacade extends AbstractFacade<Transferencia> {
         return  listaMovimientos;        
     }
     
-    public List<Transferencia> buscarConcepto (String concepto) {
-        Query q = this.em.createNamedQuery("Transferencia.findByConcepto", Transferencia.class);
+
+    public List<Transferencia> buscarConceptoEnCuenta(String concepto, Cuenta cuenta) {
+        
+        Query q = this.em.createNamedQuery("Transferencia.findByConceptoCuenta");
         q.setParameter("concepto", "%"+concepto+"%");
+        q.setParameter("cuenta", cuenta);
         
         List<Transferencia> listaT;
         try{
@@ -57,7 +60,7 @@ public class TransferenciaFacade extends AbstractFacade<Transferencia> {
            listaT = null;
         }
         
-        return  listaT;        
+        return  listaT;    
     }
     
 }

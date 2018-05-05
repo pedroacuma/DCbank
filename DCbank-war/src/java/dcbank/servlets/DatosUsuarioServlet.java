@@ -57,28 +57,10 @@ public class DatosUsuarioServlet extends HttpServlet {
         /* CUENTAS */
         
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Cuenta cuenta = null;
        
         List<Cuenta> listaCuentas =  cf.buscarPorPropietario(usuario);
-        session.setAttribute("listaCuentas", listaCuentas);
+        session.setAttribute("listaCuentas", listaCuentas);        
         
-        /* MOVIMIENTOS */
-        
-        String idCuenta = request.getParameter("cuentaUsuario");
-        
-        if (idCuenta != null){
-            cuenta = cf.buscarPorID(Integer.parseInt(idCuenta));
-            List<Transferencia> listaMovimientos = tf.buscarPorCuenta(cuenta);
-            session.setAttribute("listaMovimientos", listaMovimientos);
-        }
-        
-        if (request.getParameter("buscadorMovimiento") != null){
-            String cad = request.getParameter("buscadorMovimiento");
-            List<Transferencia> listaT = tf.buscarConcepto(cad);
-            session.setAttribute("movimientos", listaT);
-        }else{
-            session.setAttribute("movimientos", null);
-        }
         
         rd = this.getServletContext().getRequestDispatcher("/usuarioPrincipal.jsp");
         rd.forward(request, response);
