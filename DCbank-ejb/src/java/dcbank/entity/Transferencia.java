@@ -48,8 +48,8 @@ public class Transferencia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    //@Temporal(TemporalType.DATE)
+    private String fecha;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad")
@@ -78,7 +78,7 @@ public class Transferencia implements Serializable {
         this.idMovimiento = idMovimiento;
     }
 
-    public Transferencia(Integer idMovimiento, Date fecha, int cantidad, String beneficiario, String concepto) {
+    public Transferencia(Integer idMovimiento, String fecha, int cantidad, String beneficiario, String concepto) {
         this.idMovimiento = idMovimiento;
         this.fecha = fecha;
         this.cantidad = cantidad;
@@ -94,11 +94,11 @@ public class Transferencia implements Serializable {
         this.idMovimiento = idMovimiento;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

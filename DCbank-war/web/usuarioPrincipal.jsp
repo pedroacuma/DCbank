@@ -38,14 +38,15 @@
     <body>
         
         <h1 align="center"> Zona Clientes </h1>
+        <hr/>
         <div class = "opciones">
-            <a href="/transferencia.jsp">Realizar Transferencia</a>     |     
+            <a href="transferencia.jsp">Realizar Transferencia</a>     |     
             <a href="CerrarSesionServlet">Cerrar Sesión</a>
         </div>
         </br>
         <div class = "centrar">
         <!-- DATOS USUARIO -->
-            
+            </br>
             <table border = "3" class = "tablaUsuario">
             
                 <tr>
@@ -74,13 +75,14 @@
         <table border = "3" class = "tablaCuentas">
             <tr>
                     <th align = "center"><b>Cuentas</b></th>
+                    <th align = "center"><b>Saldo</b></th>
             <tr>
             <%
                 for (Cuenta c : listaCuentas){
             %>
                 <tr>
                     <td><a href="ListaMovsCuenta?cuentaUsuario=<%= c.getIdCuenta()%>" ><%=c.getIban()%></a></td>
-                   
+                    <td> <%=c.getSaldo()%>€</td>  
                 </tr>
             <%
                 }
@@ -123,8 +125,8 @@
                                     <tr>
                                         <td><%=t.getFecha()%></td>
                                         <td><%=t.getCuenta().getIban()%></td>
-                                        <td><%=t.getCuentaDestino().getIdCuenta()%></td>
-                                        <td><%=t.getCantidad()%></td>
+                                        <td><%=t.getCuentaDestino().getIban()%></td>
+                                        <td><%=t.getCantidad()%>€</td>
                                         <td><%=t.getBeneficiario()%></td>
                                         <td><%=t.getConcepto()%></td>
                                     </tr>
@@ -145,7 +147,7 @@
                                         <td><%=t.getFecha()%></td>
                                         <td><%=t.getCuenta().getIban()%></td>
                                         <td><%=t.getCuentaDestino().getIdCuenta()%></td>
-                                        <td><%=t.getCantidad()%></td>
+                                        <td><%=t.getCantidad()%>€</td>
                                         <td><%=t.getBeneficiario()%></td>
                                         <td><%=t.getConcepto()%></td>
                                     </tr>

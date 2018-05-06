@@ -49,6 +49,25 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         
         return  listaCuentas;        
     }
+    public Cuenta buscarCuentaEmpleado (Usuario propietario) {
+        Query q = this.em.createNamedQuery("Cuenta.findByPropietario",Cuenta.class);
+        q.setParameter("propietario", propietario);
+        Cuenta cuentaEmpleado;
+        cuentaEmpleado = (Cuenta)q.getSingleResult();
+        return  cuentaEmpleado;        
+    }
+    public Cuenta buscarPorIban (String iban) {
+        Query q = this.em.createNamedQuery("Cuenta.findByIban", Cuenta.class);
+        q.setParameter("iban", iban);
+        Cuenta cuenta;
+        try{
+            cuenta = (Cuenta)q.getSingleResult();
+        }catch(NoResultException re){
+            cuenta = null;
+        }
+        
+        return  cuenta;        
+    }
     
     
       public Cuenta buscarPorID (int id){
@@ -62,5 +81,6 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         }
         return c;
     }
+      
     
 }

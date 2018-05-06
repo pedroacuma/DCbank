@@ -62,5 +62,13 @@ public class TransferenciaFacade extends AbstractFacade<Transferencia> {
         
         return  listaT;    
     }
-    
+    public void crearIngreso (Transferencia t){
+        Query q = this.em.createNativeQuery("INSERT INTO transferencia (fecha,cantidad,cuenta,cuentaDestino,beneficiario,concepto) VALUES (CURDATE(),?,?,?,?,?)");
+        q.setParameter(1,t.getCantidad());
+        q.setParameter(2,t.getCuenta().getIdCuenta());
+        q.setParameter(3,t.getCuentaDestino().getIdCuenta());
+        q.setParameter(4,t.getBeneficiario());
+        q.setParameter(5,t.getConcepto());
+        q.executeUpdate();
+    }
 }

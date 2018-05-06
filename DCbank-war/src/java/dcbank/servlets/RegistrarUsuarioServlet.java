@@ -97,6 +97,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             
             //Creacion de la cuenta asociada por defecto con saldo 0
             Cuenta cuenta = new Cuenta();
+           
             cuenta.setIban(GeneradorIBAN.generadorIBAN());
             cuenta.setSaldo(0);
             cuenta.setPropietario(usuario);

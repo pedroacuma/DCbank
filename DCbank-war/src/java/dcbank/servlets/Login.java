@@ -83,9 +83,12 @@ public class Login extends HttpServlet {
             // pedro : String nextPage = rol ? "/usuarioPrincipal.jsp"  : "/empleadoPrincipal.jsp"; 
             String nextPage;
             if (rol) {
+                
                 nextPage = "/DatosUsuarioServlet";
                 List<Cuenta> listaCuentas = cf.buscarPorPropietario(usuario);
                 session.setAttribute("listaCuentas", listaCuentas);
+                //añadido 6/5/18
+                session.setAttribute("user", usuario);
             }else{
                 nextPage = "/EmpleadoServlet";
             }

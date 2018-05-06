@@ -7,13 +7,13 @@ package dcbank.servlets;
 
 import dcbank.ejb.CuentaFacade;
 import dcbank.ejb.TransferenciaFacade;
-import dcbank.ejb.UsuarioFacade;
 import dcbank.entity.Cuenta;
 import dcbank.entity.Transferencia;
 import dcbank.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,11 +25,15 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jairo
+ * @author Daniel
  */
-@WebServlet(name = "EmpleadoServlet", urlPatterns = {"/EmpleadoServlet"})
-public class EmpleadoServlet extends HttpServlet {
-
+@WebServlet(name = "retirarDineroServlet", urlPatterns = {"/retirarDineroServlet"})
+public class retirarDineroServlet extends HttpServlet {
+    @EJB
+    private CuentaFacade cuentaFacade;
+    
+   @EJB
+   private TransferenciaFacade transferenciaFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,42 +43,46 @@ public class EmpleadoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-     @EJB
-     public UsuarioFacade uf;
-     @EJB
-     public CuentaFacade cf;
-     @EJB
-     public TransferenciaFacade tf;
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session;
-        session = request.getSession();
+        HttpSession session = request.getSession();
         RequestDispatcher rd;
         
+        //cogemos los valores del formulario que necesitamos
+       
+        String importe = request.getParameter("importe");
+        String concepto = request.getParameter("concepto");
+
+        Cuenta cuenta = (Cuenta)session.getAttribute("cuenta");
+        Usuario usuario = (Usuario) session.getAttribute("user");
         
-        String dni = request.getParameter("buscadorUsuario");
-        
-        if (dni != null){
-            Usuario user = uf.buscarPorDni(dni);
-            
-            if (user != null){
-                session.setAttribute("user", user);
-                List<Cuenta> listaCuentas =  cf.buscarPorPropietario(user);
-                session.setAttribute("listaCuentas", listaCuentas);
-            }
-  
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd"); 
+        Date fechaAct = new  Date();
+        String fecha = formato.format(fechaAct);
+        String enlace;
+       
+        if(cuenta.getSaldo()>=Integer.parseInt(importe)){
+            Transferencia t = new Transferencia();
+            t.setFecha(fecha);
+            t.setCantidad(Integer.parseInt(importe) * (-1) ); //para guardarlo negativo
+            t.setCuenta(cuenta);
+            t.setCuentaDestino(cuenta);
+            t.setBeneficiario(usuario.getNombre());
+            t.setConcepto(concepto);
+            cuenta.setSaldo(cuenta.getSaldo() - Integer.parseInt(importe));
+            cuentaFacade.edit(cuenta);
+            transferenciaFacade.crearIngreso(t);
+            enlace= "/EmpleadoServlet?buscadorUsuario=" + usuario.getDni();
         }else{
-            
+            String error = "Saldo de cuenta insuficiente";
+            session.setAttribute("errorRetirar", error);
+            enlace = "/retirarDinero";
         }
-        
-        
-        
-        rd = this.getServletContext().getRequestDispatcher("/empleadoPrincipal.jsp");
+
+        rd = this.getServletContext().getRequestDispatcher(enlace);
         rd.forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

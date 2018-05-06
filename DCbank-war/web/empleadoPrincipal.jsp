@@ -18,7 +18,6 @@
     </head>
     
     <%
-           
            Usuario usuario = (Usuario)session.getAttribute("user");
            List<Cuenta> listaCuentas = null;
            String clienteDni = null;
@@ -33,15 +32,20 @@
         
         <!-- C A B E C E R A -->
         <h1 align="center">Zona Empleado</h1>
+        <hr/>
         <div class = "opciones">
-            <a href="/crearCuenta.jsp?cliente=<%=clienteDni%>">Crear Cuenta</a>     |     
-            <a href="/registrarMovimientos.jsp?cuenta=<%=request.getParameter("cuentaUsuario")%>">Registrar Movimiento</a>       |
+           
+            <%--<a href="/crearCuenta.jsp?cliente=<%=clienteDni%>">Crear Cuenta</a>     | --%>    
+            <a href="registrarMovimientos.jsp">Registrar Movimiento</a>       |
             <a href="registrarUsuario.jsp">Dar Alta Usuario</a>     |     
             <a href="CerrarSesionServlet">Cerrar Sesión</a>
+            
         </div>
+            
         <form  name="buscadorUsuario" action="EmpleadoServlet" method="post">
             <label for="buscadorUsuario"><b> Buscar Usuario </b></label>
                 <input type="text" name="buscadorUsuario" placeholder="Introduzca DNI" maxlength="9">
+                <input type="submit" value="Buscar">
         </form> 
         
         <div class = "centrar">
@@ -53,7 +57,7 @@
         
             <!-- U S U A R I O -->
             
-            
+                <br>
                 <table border = "3" class = "tablaUsuario">
             
                     <tr>
@@ -82,13 +86,16 @@
                 <table border = "3" class = "tablaCuentas">
                     <tr>
                             <th align = "center"><b>Cuentas</b></th>
+                            <th align = "center"><b>Saldo</b></th>
                     <tr>
                     <%
                         for (Cuenta c : listaCuentas){
                     %>
                         <tr>
                             <td><a href="ListaMovsCuenta?cuentaUsuario=<%= c.getIdCuenta()%>"> <%=c.getIban()%></a></td>
+                            <td> <%=c.getSaldo()%>€</td>        
                         </tr>
+  
                     <%
                         }
                     %>
@@ -136,7 +143,7 @@
                                             <td><%=t.getFecha()%></td>
                                             <td><%=t.getCuenta().getIban()%></td>
                                             <td><%=t.getCuentaDestino().getIban()%></td>
-                                            <td><%=t.getCantidad()%></td>
+                                            <td><%=t.getCantidad()%>€</td>
                                             <td><%=t.getBeneficiario()%></td>
                                             <td><%=t.getConcepto()%></td>
                                         </tr>
@@ -159,7 +166,7 @@
                                             <td><%=t.getFecha()%></td>
                                             <td><%=t.getCuenta().getIban()%></td>
                                             <td><%=t.getCuentaDestino().getIban()%></td>
-                                            <td><%=t.getCantidad()%></td>
+                                            <td><%=t.getCantidad()%>€</td>
                                             <td><%=t.getBeneficiario()%></td>
                                             <td><%=t.getConcepto()%></td>
                                         </tr>

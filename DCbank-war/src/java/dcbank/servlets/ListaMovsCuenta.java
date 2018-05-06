@@ -58,6 +58,7 @@ public class ListaMovsCuenta extends HttpServlet {
             List<Transferencia> listaMovimientos = transferenciaFacade.buscarPorCuenta(cuenta);
             session.setAttribute("listaMovimientos", listaMovimientos);
             session.setAttribute("idCuentaSeleccionada", idCuenta);
+            session.setAttribute("cuenta", cuenta);
         }
                 
         //Comprobamos el tipo de usuario para volver a empleadoPrincipal o usuarioPrincipal (el usuario logueado está etiquetado como "usuario" 
